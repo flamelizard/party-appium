@@ -1,14 +1,14 @@
-package eu.mobile.pages.tasks;
+package eu.mobile.pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class Base {
+public class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
 
-    public Base(WebDriver driver) {
+    public BasePage(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, 5);
+        wait = new WebDriverWait(driver, 3);
     }
 }

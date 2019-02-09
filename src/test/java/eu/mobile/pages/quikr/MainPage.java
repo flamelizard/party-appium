@@ -1,6 +1,6 @@
 package eu.mobile.pages.quikr;
 
-import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -23,7 +23,7 @@ public class MainPage extends BasePage {
     @FindBy(id = "city_name")
     private WebElement searchCityResult;
 
-    public MainPage(AppiumDriver driver) {
+    public MainPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
 

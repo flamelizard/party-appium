@@ -1,0 +1,11 @@
+{
+  "provider": "appium",
+  "server": "http://0.0.0.0:4723/wd/hub",
+  "capabilities": {
+    "automationName": "UiAutomator2",
+    "platformName": "Android",
+    "platformVersion": "6.0",
+    "deviceName": "Nexus5X",
+    "app": "C:\\devel\\projects\\appium\\src\\test\\resources\\apps\\tasks.apk"
+  }
+}

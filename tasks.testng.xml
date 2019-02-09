@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
+
+<suite name="Tasks app">
+    <test name="Smoke tests">
+        <parameter name="config" value="appium-app-tasks.json"/>
+        <parameter name="cucumber.options"
+                   value="--glue eu.mobile.step_definitions src/test/java/eu/mobile/features/Tasks.feature"/>
+        <classes>
+            <class name="eu.mobile.tests.TestRunnerTestNGParams"/>
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,13 @@
+{
+  "provider": "browserstack",
+  "server": "hub-cloud.browserstack.com/wd/hub",
+  "username": "kurt74",
+  "accesskey": "kjsqzStRQ2x6voKRJRDU",
+  "capabilities": {
+    "browserName": "android",
+    "deviceName": "Samsung Galaxy S6",
+    "realMobile": "true",
+    "project": "bs-relocate",
+    "build": "0.1"
+  }
+}

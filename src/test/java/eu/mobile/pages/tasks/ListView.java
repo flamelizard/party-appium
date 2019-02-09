@@ -1,5 +1,6 @@
 package eu.mobile.pages.tasks;
 
+import eu.mobile.pages.BasePage;
 import io.appium.java_client.MobileBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class ListView extends Base {
+public class ListView extends BasePage {
 
     private By hamburgerMenu = MobileBy.AccessibilityId("Open");
 

@@ -1,27 +1,23 @@
 package eu.mobile;
 
+import eu.mobile.common.Config;
 import eu.mobile.common.ConfigManager;
-import eu.mobile.common.Utils;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 public class DriverFactory {
-    private static String DEFAULT_ENV = "/config/env_appium";
     //    TODO support for parallel testing, try out
     private static ThreadLocal<WebDriver> driverStorage = new ThreadLocal<>();
-    private static ConfigManager configMgmt;
-    private static AppiumDriver appiumDriver;
+    private static ConfigManager configMgr;
     private static String SAUCE_URL_TEMPLATE =
             "http://%s:%s@ondemand.saucelabs.com:80/wd/hub";
 
+    //    TODO create driver in Hook, inject to stepdef
     public static WebDriver getDefaultDriver() throws IOException {
         WebDriver driver = driverStorage.get();
         if (driver == null) {
@@ -31,60 +27,39 @@ public class DriverFactory {
         return driver;
     }
 
+    public static void destroyDefaultDriver() {
+        WebDriver driver = driverStorage.get();
+        if (driver == null) return;
+        driver.quit();
+        driverStorage.remove();
+    }
+
     private static WebDriver createSessionDefaultEnv() throws IOException {
-        File envRoot = new File(Utils.getResourcesDir(), DEFAULT_ENV);
-        configMgmt = new ConfigManager(envRoot);
-        Properties config = configMgmt.getConfig();
+        configMgr = new ConfigManager();
+        Config config = configMgr.getConfig();
 
         URL url;
-//  TODO fail on missing props
-        switch (configMgmt.getDriverProvider()) {
+        switch (config.getProvider()) {
             case "appium":
-                url = new URL(config.getProperty("appium.server"));
-                return new AppiumDriver(url, configMgmt.getCapabilities());
+                url = new URL(config.getServer());
+                return new AppiumDriver(url, config.getCapabilities());
             case "saucelabs":
-                String sauceUrl = String.format(SAUCE_URL_TEMPLATE,
-                        config.getProperty("saucelabs.username"),
-                        config.getProperty("saucelabs.accesskey")
+                String sauceUrl = String.format("http://%s:%s@%s",
+                        config.getUsername(), config.getAccesskey(),
+                        config.getServer()
                 );
                 return new AndroidDriver(
-                        new URL(sauceUrl), configMgmt.getCapabilities());
+                        new URL(sauceUrl), config.getCapabilities());
+            case "browserstack":
+                String bsUrl = String.format(
+                        "https://%s:%s@%s",
+                        config.getUsername(), config.getAccesskey(),
+                        config.getServer()
+                );
+                return new RemoteWebDriver(new URL(bsUrl), config.getCapabilities());
             default:
                 System.out.println("Error: Unsupported driver provider");
                 return null;
         }
     }
-
-    public static WebDriver createSessionSauceLabs(
-            URL sauceUrl, DesiredCapabilities caps) {
-        return new AndroidDriver(sauceUrl, caps);
-    }
-
-    public static WebDriver createAndroidDriver(URL server, DesiredCapabilities caps) {
-        return new AndroidDriver(server, caps);
-    }
-
-    public static AppiumDriver getTestDriver() throws Exception {
-        if (appiumDriver != null)
-            return appiumDriver;
-//        appiumDriver = createSession(
-//                new URL(APPIUM_SERVER), getAndroidTestCaps());
-//        emulator has long response time on commands
-        appiumDriver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-        return appiumDriver;
-    }
-
-    public static DesiredCapabilities getAndroidTestCaps() {
-//        String mobileApp = "quikr_v10.18.apk";
-        String mobileApp = "tasks.apk";
-        String mobileAppPath = new File(Utils.getMobileAppDir(), mobileApp).getAbsolutePath();
-
-        DesiredCapabilities caps = new DesiredCapabilities();
-        caps.setCapability("platformName", "Android");
-        caps.setCapability("platformVersion", "5.1");
-        caps.setCapability("deviceName", "Nexus6");
-        caps.setCapability("app", mobileAppPath);
-        return caps;
-    }
-
 }

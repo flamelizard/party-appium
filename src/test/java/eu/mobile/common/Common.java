@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
 
-public class Utils {
+public class Common {
     public static File getMobileAppDir() {
         return new File(getResourcesDir(), "apps");
     }
@@ -20,7 +20,7 @@ public class Utils {
         return new File(projectRoot, "src/test/resources");
     }
 
-    public static Map<String, String> fromJson(String json) {
+    public static Map<String, String> jsonToMap(String json) {
         Gson gson = new Gson();
         Type genericClassType = new TypeToken<Map<String, String>>() {
         }.getType();
@@ -28,8 +28,12 @@ public class Utils {
         return gson.fromJson(json, genericClassType);
     }
 
-    public static Map<String, String> fromJson(File file) throws IOException {
+    public static Map<String, String> jsonToMap(File file) throws IOException {
         List<String> lines = Files.readAllLines(file.toPath());
-        return fromJson(String.join("\n", lines));
+        return jsonToMap(String.join("\n", lines));
+    }
+
+    public static File getLogsDir() {
+        return new File(System.getProperty("user.dir"), "logs");
     }
 }

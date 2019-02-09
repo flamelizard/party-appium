@@ -1,9 +1,0 @@
-{
-  "appiumVersion": "1.9.1",
-  "deviceName": "Samsung Galaxy Nexus Emulator",
-  "deviceOrientation": "portrait",
-  "browserName": "",
-  "platformVersion": "4.4",
-  "platformName": "Android",
-  "app": "??"
-}

@@ -1,7 +1,7 @@
 package eu.mobile.pages.quikr;
 
-import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -33,7 +33,7 @@ public class LoginPage extends BasePage {
     @FindBy(xpath = "//android.widget.TextView[@text = 'Login / Register']")
     private WebElement TopHeader;
 
-    public LoginPage(AppiumDriver driver) {
+    public LoginPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
 

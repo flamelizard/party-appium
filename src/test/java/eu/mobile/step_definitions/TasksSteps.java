@@ -1,4 +1,4 @@
-package eu.mobile.step_definitions.tasks;
+package eu.mobile.step_definitions;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -9,7 +9,8 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
 
-public class ListSteps {
+public class TasksSteps {
+    //    TODO inject webdriver instance, driver should be provisioned in Hooks
     private WebDriver driver;
     private ListView listView;
 

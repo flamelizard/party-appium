@@ -1,0 +1,16 @@
+{
+  "info": "EXPIRED_ACCOUNT",
+  "provider": "saucelabs",
+  "server": "ondemand.saucelabs.com:80/wd/hub",
+  "username": "kurt-hux",
+  "accesskey": "12fe3ea7-5711-4ca9-a58b-7947ed8df6a2",
+  "capabilities": {
+    "appiumVersion": "1.9.1",
+    "deviceName": "Samsung Galaxy Nexus Emulator",
+    "deviceOrientation": "portrait",
+    "browserName": "",
+    "platformVersion": "4.4",
+    "platformName": "Android",
+    "app": "sauce-storage:tasks.app"
+  }
+}
